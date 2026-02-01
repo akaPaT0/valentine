@@ -39,9 +39,9 @@ export default function LoverPage({
           <div className="mt-7 flex items-center justify-center gap-3">
             <YesButton number={n} lover={lover} from={from} size="md" />
 
-            <button
+           <button
               data-runaway="no"
-              className="shrink-0 px-6 py-3 rounded-xl font-semibold border border-[#e5284c]/40 bg-black/40 text-[#ff7c97] hover:bg-[#e5284c]/10 hover:border-[#e5284c]/70 hover:text-[#ff7c97] active:scale-[0.99] select-none touch-none backdrop-blur"
+              className="shrink-0 px-6 py-3 rounded-xl font-semibold bg-white text-black border border-white/20 hover:bg-white/90 active:scale-[0.99] select-none touch-none"
             >
               No
             </button>
@@ -60,13 +60,14 @@ export default function LoverPage({
 
           <div className="mt-10 flex items-center justify-center gap-4">
             <YesButton number={n} lover={lover} from={from} size="lg" />
+           
+          <button
+            data-runaway="no"
+            className="shrink-0 px-8 py-4 rounded-2xl text-lg font-semibold bg-white text-black border border-white/20 hover:bg-white/90 active:scale-[0.99] select-none touch-none"
+          >
+            No
+          </button>
 
-            <button
-              data-runaway="no"
-              className="shrink-0 px-8 py-4 rounded-2xl text-lg font-semibold border border-[#e5284c]/40 bg-black/40 text-[#ff7c97] hover:bg-[#e5284c]/10 hover:border-[#e5284c]/70 hover:text-[#ff7c97] active:scale-[0.99] select-none touch-none backdrop-blur"
-            >
-              No
-            </button>
           </div>
         </div>
       </section>
