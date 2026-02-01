@@ -3,6 +3,12 @@
 
 import { useMemo, useState } from "react";
 
+declare global {
+  interface Window {
+    va?: (event: string, props?: Record<string, any>) => void;
+  }
+}
+
 type FormState = {
   sender: string;
   lover: string;
@@ -43,16 +49,37 @@ export default function ValentineForm({ mode }: { mode: "mobile" | "pc" }) {
 
   const disabled = !form.lover.trim();
 
+  function track(event: string, props?: Record<string, any>) {
+    try {
+      window.va?.(event, props);
+    } catch {}
+  }
+
   async function copyLink() {
     const full = `${window.location.origin}${link}`;
     await navigator.clipboard.writeText(full);
+
+    // TRACK: user generated (copied) a link
+    track("generate_link", {
+      mode,
+      has_sender: !!form.sender.trim(),
+      has_number: !!form.number.trim(),
+    });
   }
 
   async function shareLink() {
     const full = `${window.location.origin}${link}`;
     const text = `Open this 😌`;
+
+    // TRACK: user attempted to share (also counts as generate intent)
+    track("share_link", {
+      mode,
+      has_sender: !!form.sender.trim(),
+      has_number: !!form.number.trim(),
+    });
+
     if (navigator.share) {
-      await navigator.share({ title: "Valentine", text, url: full });
+      await navigator.share({ title: "Valentine?", text, url: full });
     } else {
       await navigator.clipboard.writeText(full);
     }
@@ -78,7 +105,7 @@ export default function ValentineForm({ mode }: { mode: "mobile" | "pc" }) {
       <div className="space-y-2">
         <h2 className={`${titleClass} font-semibold`}>Generate your link</h2>
         <p className={`${subClass} text-white/70`}>
-          Write your lover's name, generate a personalized link, then copy or share.
+          Put the names, generate a personalized route, then copy or share.
         </p>
       </div>
 
@@ -100,7 +127,7 @@ export default function ValentineForm({ mode }: { mode: "mobile" | "pc" }) {
             className={inputClass}
             value={form.lover}
             onChange={(e) => setForm((s) => ({ ...s, lover: e.target.value }))}
-            placeholder="Lover"
+            placeholder="Maria"
             autoComplete="off"
           />
         </div>

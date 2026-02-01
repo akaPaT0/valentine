@@ -1,21 +1,25 @@
+// app/page.tsx
 import Background from "./components/background";
 import ValentineForm from "./components/valentine-form";
+import TrackHomeOpen from "./components/track-home-open";
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen bg-black text-white">
+    <main className="relative min-h-screen bg-black text-white overflow-hidden">
+      <Background />
+
       {/* MOBILE */}
-      <section className="relative block min-h-screen lg:hidden">
-        <Background />
-        <div className="relative z-10 flex min-h-screen items-center justify-center px-6">
+      <section className="relative z-10 block min-h-screen lg:hidden">
+        <TrackHomeOpen mode="mobile" />
+        <div className="min-h-screen px-6 flex items-center justify-center">
           <ValentineForm mode="mobile" />
         </div>
       </section>
 
       {/* PC */}
-      <section className="relative hidden min-h-screen lg:block">
-        <Background />
-        <div className="relative z-10 flex min-h-screen items-center justify-center px-6">
+      <section className="relative z-10 hidden min-h-screen lg:block">
+        <TrackHomeOpen mode="pc" />
+        <div className="min-h-screen px-6 flex items-center justify-center">
           <ValentineForm mode="pc" />
         </div>
       </section>
