@@ -1,4 +1,4 @@
-// app/[lover]/page.tsx
+// app/v/[lover]/page.tsx
 import Background from "@/app/components/background";
 import Runaway from "./runaway";
 import YesButton from "./yes-button";
@@ -8,12 +8,19 @@ export default function LoverPage({
   searchParams,
 }: {
   params: { lover: string };
-  searchParams: { from?: string; n?: string };
+  searchParams: { from?: string | string[]; n?: string | string[] };
 }) {
   const lover =
     decodeURIComponent(params.lover).replace(/-/g, " ").trim() || "love";
-  const from = (searchParams.from || "").trim();
-  const n = (searchParams.n || "").trim();
+
+  const fromRaw = Array.isArray(searchParams.from)
+    ? searchParams.from[0]
+    : searchParams.from;
+
+  const nRaw = Array.isArray(searchParams.n) ? searchParams.n[0] : searchParams.n;
+
+  const from = (fromRaw || "").trim();
+  const n = (nRaw || "").trim();
 
   return (
     <main className="relative min-h-screen bg-black text-white overflow-hidden">

@@ -1,10 +1,19 @@
-// app/[lover]/yes-button.tsx
+// app/v/[lover]/yes-button.tsx
 "use client";
 
 import { useState } from "react";
 
-function toWhatsAppDigits(raw: string) {
-  return raw.replace(/[^\d]/g, "");
+function normalizeWhatsApp(raw: string) {
+  // digits only
+  let d = (raw || "").replace(/[^\d]/g, "");
+
+  // Lebanon quick normalize:
+  // 0XXXXXXXX (9 digits starting with 0) -> remove 0
+  // XXXXXXXX (8 digits) -> add 961
+  if (d.length === 9 && d.startsWith("0")) d = d.slice(1);
+  if (d.length === 8) d = `961${d}`;
+
+  return d;
 }
 
 export default function YesButton({
@@ -21,7 +30,7 @@ export default function YesButton({
   const [animating, setAnimating] = useState(false);
   const [error, setError] = useState("");
 
-  const wa = toWhatsAppDigits(number || "");
+  const wa = normalizeWhatsApp(number || "");
 
   const msg = `GOOD NEWS 💘\n${lover} clicked YES!\n${from ? `From: ${from}\n` : ""}Time to act cool 😌`;
 
@@ -37,11 +46,9 @@ export default function YesButton({
           setError("");
           setAnimating(true);
 
-          // run animation first
           window.setTimeout(() => {
             setAnimating(false);
 
-            // then redirect if we actually have a number
             if (!wa) {
               setError("No WhatsApp number was provided in the link 😅");
               return;
@@ -61,9 +68,7 @@ export default function YesButton({
         Yes
       </button>
 
-      {error ? (
-        <p className="mt-2 text-xs text-white/60">{error}</p>
-      ) : null}
+      {error ? <p className="mt-2 text-xs text-white/60">{error}</p> : null}
     </div>
   );
 }
