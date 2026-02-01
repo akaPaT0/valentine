@@ -128,13 +128,13 @@ export default function ValentineForm({ mode }: { mode: "mobile" | "pc" }) {
             className={inputClass}
             value={form.lover}
             onChange={(e) => setForm((s) => ({ ...s, lover: e.target.value }))}
-            placeholder="Maria"
+            placeholder="Angelina Jolie"
             autoComplete="off"
           />
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm text-white/70">Your number (optional)</label>
+          <label className="text-sm text-white/70">Your number (Required if you want answer)</label>
           <input
             className={inputClass}
             value={form.number}
