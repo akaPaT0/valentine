@@ -1,0 +1,68 @@
+// app/[lover]/page.tsx
+import Background from "@/app/components/background";
+import Runaway from "./runaway";
+import YesButton from "./yes-button";
+
+export default function LoverPage({
+  params,
+  searchParams,
+}: {
+  params: { lover: string };
+  searchParams: { from?: string; n?: string };
+}) {
+  const lover =
+    decodeURIComponent(params.lover).replace(/-/g, " ").trim() || "love";
+  const from = (searchParams.from || "").trim();
+  const n = (searchParams.n || "").trim();
+
+  return (
+    <main className="relative min-h-screen bg-black text-white overflow-hidden">
+      <Background />
+      <Runaway />
+
+      {/* MOBILE */}
+      <section className="relative z-10 block min-h-screen lg:hidden">
+        <div className="min-h-screen px-6 flex flex-col items-center justify-center text-center">
+          <h1 className="text-3xl font-semibold">Hey {lover} 💘</h1>
+
+          <p className="mt-3 text-white/75">
+            Will you be my valentine{from ? `, from ${from}` : ""}?
+          </p>
+
+          <div className="mt-7 flex items-center justify-center gap-3">
+            <YesButton number={n} lover={lover} from={from} size="md" />
+
+            <button
+              data-runaway="no"
+              className="shrink-0 px-6 py-3 rounded-xl font-semibold border border-[#e5284c]/40 bg-black/40 text-[#ff7c97] hover:bg-[#e5284c]/10 hover:border-[#e5284c]/70 hover:text-[#ff7c97] active:scale-[0.99] select-none touch-none backdrop-blur"
+            >
+              No
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* PC */}
+      <section className="relative z-10 hidden min-h-screen lg:block">
+        <div className="min-h-screen px-6 flex flex-col items-center justify-center text-center">
+          <h1 className="text-6xl font-semibold">Hey {lover} 💘</h1>
+
+          <p className="mt-4 text-white/75 text-xl">
+            Will you be my valentine{from ? `, from ${from}` : ""}?
+          </p>
+
+          <div className="mt-10 flex items-center justify-center gap-4">
+            <YesButton number={n} lover={lover} from={from} size="lg" />
+
+            <button
+              data-runaway="no"
+              className="shrink-0 px-8 py-4 rounded-2xl text-lg font-semibold border border-[#e5284c]/40 bg-black/40 text-[#ff7c97] hover:bg-[#e5284c]/10 hover:border-[#e5284c]/70 hover:text-[#ff7c97] active:scale-[0.99] select-none touch-none backdrop-blur"
+            >
+              No
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}
