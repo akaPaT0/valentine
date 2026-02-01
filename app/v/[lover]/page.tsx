@@ -2,6 +2,7 @@
 import Background from "@/app/components/background";
 import Runaway from "./runaway";
 import YesButton from "./yes-button";
+import TrackValentineOpen from "./track-valentine-open";
 
 export default function LoverPage({
   params,
@@ -27,6 +28,9 @@ export default function LoverPage({
       <Background />
       <Runaway />
 
+      {/* TRACK OPEN (fires once per visit) */}
+      <TrackValentineOpen lover={lover} from={from} number={n} />
+
       {/* MOBILE */}
       <section className="relative z-10 block min-h-screen lg:hidden">
         <div className="min-h-screen px-6 flex flex-col items-center justify-center text-center">
@@ -39,13 +43,12 @@ export default function LoverPage({
           <div className="mt-7 flex items-center justify-center gap-3">
             <YesButton number={n} lover={lover} from={from} size="md" />
 
-           <button
-            data-runaway="no"
-            className="shrink-0 px-6 py-3 rounded-xl font-semibold bg-white text-[#e5284c] border border-white/20 hover:bg-white/90 active:scale-[0.99] select-none touch-none"
-          >
-            No
-          </button>
-
+            <button
+              data-runaway="no"
+              className="shrink-0 px-6 py-3 rounded-xl font-semibold bg-white text-[#e5284c] border border-white/20 hover:bg-white/90 active:scale-[0.99] select-none touch-none"
+            >
+              No
+            </button>
           </div>
         </div>
       </section>
@@ -61,14 +64,13 @@ export default function LoverPage({
 
           <div className="mt-10 flex items-center justify-center gap-4">
             <YesButton number={n} lover={lover} from={from} size="lg" />
-           
-         <button
-            data-runaway="no"
-            className="shrink-0 px-8 py-4 rounded-2xl text-lg font-semibold bg-white text-[#e5284c] border border-white/20 hover:bg-white/90 active:scale-[0.99] select-none touch-none"
-          >
-            No
-          </button>
 
+            <button
+              data-runaway="no"
+              className="shrink-0 px-8 py-4 rounded-2xl text-lg font-semibold bg-white text-[#e5284c] border border-white/20 hover:bg-white/90 active:scale-[0.99] select-none touch-none"
+            >
+              No
+            </button>
           </div>
         </div>
       </section>
