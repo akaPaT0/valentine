@@ -22,9 +22,10 @@ function buildLink(lover: string, sender: string, number: string) {
   const slug = slugifyName(lover) || "lover";
   const params = new URLSearchParams();
   if (sender.trim()) params.set("from", sender.trim());
+  if (number.trim()) params.set("from", sender.trim());
   if (number.trim()) params.set("n", number.trim());
   const qs = params.toString();
-  return `/${slug}${qs ? `?${qs}` : ""}`;
+  return `/v/${slug}${qs ? `?${qs}` : ""}`;
 }
 
 export default function ValentineForm({ mode }: { mode: "mobile" | "pc" }) {
