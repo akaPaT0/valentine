@@ -3,12 +3,6 @@
 
 import { useEffect, useMemo, useState } from "react";
 
-declare global {
-  interface Window {
-    va?: (event: string, props?: Record<string, any>) => void;
-  }
-}
-
 type FormState = {
   sender: string;
   lover: string;
@@ -42,7 +36,7 @@ export default function ValentineForm({ mode }: { mode: "mobile" | "pc" }) {
     number: "",
   });
 
-  // prevents React hydration mismatch (no more error #418)
+  // prevents hydration mismatch
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
@@ -53,9 +47,10 @@ export default function ValentineForm({ mode }: { mode: "mobile" | "pc" }) {
 
   const disabled = !form.lover.trim();
 
-  function track(event: string, props?: Record<string, any>) {
+  // Vercel Analytics event helper (matches @vercel/analytics typing)
+  function track(name: string, props?: Record<string, any>) {
     try {
-      window.va?.(event, props);
+      window.va?.("event", { name, ...props });
     } catch {}
   }
 
@@ -63,7 +58,6 @@ export default function ValentineForm({ mode }: { mode: "mobile" | "pc" }) {
     const full = `${window.location.origin}${link}`;
     await navigator.clipboard.writeText(full);
 
-    // TRACK: generated link (copy)
     track("generate_link", {
       mode,
       has_sender: !!form.sender.trim(),
@@ -75,7 +69,6 @@ export default function ValentineForm({ mode }: { mode: "mobile" | "pc" }) {
     const full = `${window.location.origin}${link}`;
     const text = `Open this 😌`;
 
-    // TRACK: share intent
     track("share_link", {
       mode,
       has_sender: !!form.sender.trim(),
@@ -131,7 +124,7 @@ export default function ValentineForm({ mode }: { mode: "mobile" | "pc" }) {
             className={inputClass}
             value={form.lover}
             onChange={(e) => setForm((s) => ({ ...s, lover: e.target.value }))}
-            placeholder="sydney Sweeney"
+            placeholder="Maria"
             autoComplete="off"
           />
         </div>

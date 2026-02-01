@@ -1,5 +1,6 @@
 // app/layout.tsx
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata = {
   title: "Valentine?",
@@ -15,9 +16,9 @@ export const metadata = {
     type: "website",
     images: [
       {
-        url: "/valentine.ico",
-        width: 512,
-        height: 512,
+        url: "/og.png",
+        width: 1200,
+        height: 630,
         alt: "Valentine?",
       },
     ],
@@ -26,9 +27,10 @@ export const metadata = {
     card: "summary_large_image",
     title: "Valentine?",
     description: "Will you be my Valentine? 💘",
-    images: ["/valentine.ico"],
+    images: ["/og.png"],
   },
 };
+
 export default function RootLayout({
   children,
 }: {
@@ -36,7 +38,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
