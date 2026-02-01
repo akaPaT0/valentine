@@ -1,15 +1,12 @@
 // app/v/[lover]/yes-button.tsx
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 function normalizeWhatsApp(raw: string) {
-  // digits only
   let d = (raw || "").replace(/[^\d]/g, "");
 
-  // Lebanon quick normalize:
-  // 0XXXXXXXX (9 digits starting with 0) -> remove 0
-  // XXXXXXXX (8 digits) -> add 961
+  // Lebanon normalize:
   if (d.length === 9 && d.startsWith("0")) d = d.slice(1);
   if (d.length === 8) d = `961${d}`;
 
@@ -29,8 +26,19 @@ export default function YesButton({
 }) {
   const [animating, setAnimating] = useState(false);
   const [error, setError] = useState("");
+  const [urlN, setUrlN] = useState("");
 
-  const wa = normalizeWhatsApp(number || "");
+  // Read ?n= from the real URL (client-side)
+  useEffect(() => {
+    const sp = new URLSearchParams(window.location.search);
+    setUrlN(sp.get("n") || "");
+  }, []);
+
+  // prefer prop, fallback to URL
+  const wa = useMemo(() => {
+    const raw = (number || "").trim() || (urlN || "").trim();
+    return normalizeWhatsApp(raw);
+  }, [number, urlN]);
 
   const msg = `GOOD NEWS 💘\n${lover} clicked YES!\n${from ? `From: ${from}\n` : ""}Time to act cool 😌`;
 
