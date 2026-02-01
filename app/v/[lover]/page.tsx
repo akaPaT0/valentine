@@ -40,11 +40,12 @@ export default function LoverPage({
             <YesButton number={n} lover={lover} from={from} size="md" />
 
            <button
-              data-runaway="no"
-              className="shrink-0 px-6 py-3 rounded-xl font-semibold bg-white text-black border border-white/20 hover:bg-white/90 active:scale-[0.99] select-none touch-none"
-            >
-              No
-            </button>
+            data-runaway="no"
+            className="shrink-0 px-6 py-3 rounded-xl font-semibold bg-white text-[#e5284c] border border-white/20 hover:bg-white/90 active:scale-[0.99] select-none touch-none"
+          >
+            No
+          </button>
+
           </div>
         </div>
       </section>
@@ -61,9 +62,9 @@ export default function LoverPage({
           <div className="mt-10 flex items-center justify-center gap-4">
             <YesButton number={n} lover={lover} from={from} size="lg" />
            
-          <button
+         <button
             data-runaway="no"
-            className="shrink-0 px-8 py-4 rounded-2xl text-lg font-semibold bg-white text-black border border-white/20 hover:bg-white/90 active:scale-[0.99] select-none touch-none"
+            className="shrink-0 px-8 py-4 rounded-2xl text-lg font-semibold bg-white text-[#e5284c] border border-white/20 hover:bg-white/90 active:scale-[0.99] select-none touch-none"
           >
             No
           </button>
