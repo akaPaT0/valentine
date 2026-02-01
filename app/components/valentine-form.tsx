@@ -1,7 +1,7 @@
 // app/components/valentine-form.tsx
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 declare global {
   interface Window {
@@ -42,6 +42,10 @@ export default function ValentineForm({ mode }: { mode: "mobile" | "pc" }) {
     number: "",
   });
 
+  // prevents React hydration mismatch (no more error #418)
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   const link = useMemo(
     () => buildLink(form.lover, form.sender, form.number),
     [form.lover, form.sender, form.number]
@@ -59,7 +63,7 @@ export default function ValentineForm({ mode }: { mode: "mobile" | "pc" }) {
     const full = `${window.location.origin}${link}`;
     await navigator.clipboard.writeText(full);
 
-    // TRACK: user generated (copied) a link
+    // TRACK: generated link (copy)
     track("generate_link", {
       mode,
       has_sender: !!form.sender.trim(),
@@ -71,7 +75,7 @@ export default function ValentineForm({ mode }: { mode: "mobile" | "pc" }) {
     const full = `${window.location.origin}${link}`;
     const text = `Open this 😌`;
 
-    // TRACK: user attempted to share (also counts as generate intent)
+    // TRACK: share intent
     track("share_link", {
       mode,
       has_sender: !!form.sender.trim(),
@@ -145,7 +149,7 @@ export default function ValentineForm({ mode }: { mode: "mobile" | "pc" }) {
 
         <div className="pt-2 space-y-2">
           <div className="rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white/80 break-all">
-            {typeof window === "undefined" ? "/v/maria?from=..." : link}
+            {mounted ? link : "/v/maria?from=..."}
           </div>
 
           <div className="grid grid-cols-2 gap-2">
