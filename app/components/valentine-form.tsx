@@ -109,7 +109,7 @@ export default function ValentineForm({ mode }: { mode: "mobile" | "pc" }) {
       <div className="space-y-2">
         <h2 className={`${titleClass} font-semibold`}>Generate your link</h2>
         <p className={`${subClass} text-white/70`}>
-          Put the names, generate a personalized route, then copy or share.
+          Put the names, generate a custom link, then copy or share. Enjoy!
         </p>
       </div>
 
@@ -131,7 +131,7 @@ export default function ValentineForm({ mode }: { mode: "mobile" | "pc" }) {
             className={inputClass}
             value={form.lover}
             onChange={(e) => setForm((s) => ({ ...s, lover: e.target.value }))}
-            placeholder="Maria"
+            placeholder="sydney Sweeney"
             autoComplete="off"
           />
         </div>
