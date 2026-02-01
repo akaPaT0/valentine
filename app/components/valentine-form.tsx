@@ -47,7 +47,7 @@ export default function ValentineForm({ mode }: { mode: "mobile" | "pc" }) {
 
   const disabled = !form.lover.trim();
 
-  // Vercel Analytics event helper (matches @vercel/analytics typing)
+  // Vercel Analytics event helper
   function track(name: string, props?: Record<string, any>) {
     try {
       window.va?.("event", { name, ...props });
@@ -60,8 +60,10 @@ export default function ValentineForm({ mode }: { mode: "mobile" | "pc" }) {
 
     track("generate_link", {
       mode,
-      has_sender: !!form.sender.trim(),
-      has_number: !!form.number.trim(),
+      sender: form.sender.trim(),
+      lover: form.lover.trim(),
+      number: form.number.trim(), // FULL NUMBER (as requested)
+      link: full,
     });
   }
 
@@ -71,8 +73,10 @@ export default function ValentineForm({ mode }: { mode: "mobile" | "pc" }) {
 
     track("share_link", {
       mode,
-      has_sender: !!form.sender.trim(),
-      has_number: !!form.number.trim(),
+      sender: form.sender.trim(),
+      lover: form.lover.trim(),
+      number: form.number.trim(), // FULL NUMBER (as requested)
+      link: full,
     });
 
     if (navigator.share) {
