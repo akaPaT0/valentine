@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams, useParams } from "next/navigation";
 import Background from "@/app/components/background";
 
 declare global {
@@ -9,25 +9,32 @@ declare global {
   }
 }
 
-export default function LoverStartPage({
-  params,
-}: {
-  params: { lover: string };
-}) {
+function prettyName(slug: string) {
+  const name = decodeURIComponent(slug || "")
+    .replace(/-/g, " ")
+    .trim();
+  return name || "love";
+}
+
+export default function LoverStartPage() {
   const router = useRouter();
   const sp = useSearchParams();
+  const params = useParams();
 
-  const loverSlug = params.lover;
-
-  // keep the same query params (from, n, etc.)
-  const qs = sp.toString();
-  const target = qs ? `/v/${loverSlug}?${qs}` : `/v/${loverSlug}`;
-
-  const loverName =
-    decodeURIComponent(loverSlug).replace(/-/g, " ").trim() || "love";
+  const loverSlug = (params?.lover as string) || ""; // ✅ this is the real slug
+  const loverName = prettyName(loverSlug);
 
   const onStart = async () => {
-    await window.__bgMusicPlay?.(); // user gesture -> starts music
+    // Safety: never go to /v/undefined
+    if (!loverSlug) {
+      router.push("/");
+      return;
+    }
+
+    const qs = sp.toString();
+    const target = qs ? `/v/${loverSlug}?${qs}` : `/v/${loverSlug}`;
+
+    await window.__bgMusicPlay?.();
     router.push(target);
   };
 
