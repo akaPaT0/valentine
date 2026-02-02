@@ -21,7 +21,8 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/og.png", // will become absolute because of metadataBase
+        // ✅ absolute URL (more reliable for WhatsApp mobile scrapers)
+        url: "https://valentine-one-zeta.vercel.app/og.png",
         width: 1200,
         height: 630,
         alt: "Valentine?",
@@ -32,7 +33,8 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Valentine?",
     description: "Will you be my Valentine? 💘",
-    images: ["/og.png"],
+    // ✅ absolute URL
+    images: ["https://valentine-one-zeta.vercel.app/og.png"],
   },
 };
 
