@@ -26,7 +26,8 @@ function buildLink(lover: string, sender: string, number: string) {
   if (number.trim()) params.set("n", number.trim());
 
   const qs = params.toString();
-  return `/v/${slug}${qs ? `?${qs}` : ""}`;
+  // ✅ go to the music start gate first
+  return `/v/${slug}/start${qs ? `?${qs}` : ""}`;
 }
 
 export default function ValentineForm({ mode }: { mode: "mobile" | "pc" }) {
@@ -134,7 +135,9 @@ export default function ValentineForm({ mode }: { mode: "mobile" | "pc" }) {
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm text-white/70">Your number (Required if you want answer)</label>
+          <label className="text-sm text-white/70">
+            Your number (Required if you want answer)
+          </label>
           <input
             className={inputClass}
             value={form.number}
@@ -146,14 +149,22 @@ export default function ValentineForm({ mode }: { mode: "mobile" | "pc" }) {
 
         <div className="pt-2 space-y-2">
           <div className="rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white/80 break-all">
-            {mounted ? link : "/v/maria?from=..."}
+            {mounted ? link : "/v/maria/start?from=..."}
           </div>
 
           <div className="grid grid-cols-2 gap-2">
-            <button className={primaryBtn} onClick={copyLink} disabled={disabled}>
+            <button
+              className={primaryBtn}
+              onClick={copyLink}
+              disabled={disabled}
+            >
               Copy
             </button>
-            <button className={ghostBtn} onClick={shareLink} disabled={disabled}>
+            <button
+              className={ghostBtn}
+              onClick={shareLink}
+              disabled={disabled}
+            >
               Share
             </button>
           </div>
