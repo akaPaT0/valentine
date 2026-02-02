@@ -4,9 +4,7 @@ import type { Metadata } from "next";
 const SITE_URL = "https://valentine-one-zeta.vercel.app";
 
 function prettyName(slug: string) {
-  const name = decodeURIComponent(slug || "")
-    .replace(/-/g, " ")
-    .trim();
+  const name = decodeURIComponent(slug || "").replace(/-/g, " ").trim();
   return name || "love";
 }
 
@@ -27,33 +25,26 @@ export function generateMetadata({
   const title = `Hey ${lover} 💘`;
   const description = `Will you be my Valentine${from ? `, from ${from}` : ""}?`;
 
-  // ✅ absolute URLs for scrapers (mobile WhatsApp likes this more)
-  const canonical = `${SITE_URL}/v/${encodeURIComponent(params.lover)}`;
+  const pageUrl = `${SITE_URL}/v/${encodeURIComponent(params.lover)}`;
+  const ogUrl = `${pageUrl}/opengraph-image`; // ✅ personalized image
 
   return {
     title,
     description,
-    alternates: { canonical },
+    alternates: { canonical: pageUrl },
     openGraph: {
       title,
       description,
-      url: canonical,
+      url: pageUrl,
       siteName: "Valentine",
       type: "website",
-      images: [
-        {
-          url: `${SITE_URL}/og.png`,
-          width: 1200,
-          height: 630,
-          alt: "Valentine?",
-        },
-      ],
+      images: [{ url: ogUrl, width: 1200, height: 630, alt: `Hey ${lover}` }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: [`${SITE_URL}/og.png`],
+      images: [ogUrl],
     },
   };
 }
