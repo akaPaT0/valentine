@@ -13,13 +13,15 @@ function slugifyName(input: string) {
   return input
     .trim()
     .toLowerCase()
+    .normalize("NFKD")
     .replace(/['"]/g, "")
-    .replace(/[^a-z0-9]+/g, "-")
+    // ✅ keep letters & numbers from ANY language (Arabic/English/etc.)
+    .replace(/[^\p{L}\p{N}]+/gu, "-")
     .replace(/^-+|-+$/g, "");
 }
 
 function buildLink(lover: string, sender: string, number: string) {
-  const slug = slugifyName(lover) || "lover";
+  const slug = slugifyName(lover) || "love";
 
   const params = new URLSearchParams();
   if (sender.trim()) params.set("from", sender.trim());
