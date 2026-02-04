@@ -10,19 +10,15 @@ function prettyName(slug: string) {
   return name || "love";
 }
 
-export default function OgImage({
-  params,
-}: {
-  params: { lover: string };
-}) {
+export default function OgImage({ params }: { params: { lover: string } }) {
   const lover = prettyName(params.lover);
 
   return new ImageResponse(
     (
       <div
         style={{
-          width: "1200px",
-          height: "630px",
+          width: 1200,
+          height: 630,
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
@@ -31,12 +27,18 @@ export default function OgImage({
           color: "white",
         }}
       >
-        <div style={{ fontSize: 28, opacity: 0.85 }}>Valentine 💘</div>
-        <div style={{ fontSize: 86, fontWeight: 800, marginTop: 18 }}>
-          Hey {lover}
+        <div style={{ display: "flex" }}>
+          <span style={{ fontSize: 28, opacity: 0.85 }}>Valentine 💘</span>
         </div>
-        <div style={{ fontSize: 44, marginTop: 16, opacity: 0.9 }}>
-          Will you be my Valentine?
+
+        <div style={{ display: "flex", marginTop: 18 }}>
+          <span style={{ fontSize: 86, fontWeight: 800 }}>Hey {lover}</span>
+        </div>
+
+        <div style={{ display: "flex", marginTop: 16 }}>
+          <span style={{ fontSize: 44, opacity: 0.9 }}>
+            Will you be my Valentine?
+          </span>
         </div>
       </div>
     ),
