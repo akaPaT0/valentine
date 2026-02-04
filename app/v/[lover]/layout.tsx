@@ -17,16 +17,18 @@ export function generateMetadata({
   searchParams,
 }: {
   params: { lover: string };
-  searchParams: { from?: string | string[] };
+  searchParams?: { from?: string | string[] };
 }): Metadata {
   const lover = prettyName(params.lover);
-  const from = (first(searchParams.from) || "").trim();
+
+  // ✅ SAFE: searchParams may be undefined in layout metadata
+  const from = (first(searchParams?.from) || "").trim();
 
   const title = `Hey ${lover} 💘`;
   const description = `Will you be my Valentine${from ? `, from ${from}` : ""}?`;
 
   const pageUrl = `${SITE_URL}/v/${encodeURIComponent(params.lover)}`;
-  const ogUrl = `${pageUrl}/opengraph-image`; // ✅ personalized image
+  const ogUrl = `${pageUrl}/opengraph-image`;
 
   return {
     title,
@@ -38,7 +40,14 @@ export function generateMetadata({
       url: pageUrl,
       siteName: "Valentine",
       type: "website",
-      images: [{ url: ogUrl, width: 1200, height: 630, alt: `Hey ${lover}` }],
+      images: [
+        {
+          url: ogUrl,
+          width: 1200,
+          height: 630,
+          alt: `Hey ${lover}`,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
@@ -49,6 +58,10 @@ export function generateMetadata({
   };
 }
 
-export default function LoverLayout({ children }: { children: React.ReactNode }) {
-  return children;
+export default function LoverLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return <>{children}</>;
 }
