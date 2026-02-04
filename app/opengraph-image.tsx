@@ -10,8 +10,8 @@ export default function OgImage() {
     (
       <div
         style={{
-          width: "1200px",
-          height: "630px",
+          width: 1200,
+          height: 630,
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
@@ -20,14 +20,20 @@ export default function OgImage() {
           color: "white",
         }}
       >
-        <div style={{ fontSize: 28, opacity: 0.85 }}>Valentine 💌</div>
-        <div style={{ fontSize: 80, fontWeight: 700, marginTop: 18 }}>
-          Will you be my
-          <br />
-          Valentine?
+        <div style={{ display: "flex" }}>
+          <span style={{ fontSize: 28, opacity: 0.85 }}>Valentine 💘</span>
         </div>
-        <div style={{ fontSize: 30, marginTop: 24, opacity: 0.75 }}>
-          One question. One button.
+
+        <div style={{ display: "flex", marginTop: 18 }}>
+          <span style={{ fontSize: 86, fontWeight: 800 }}>
+            Will you be my Valentine?
+          </span>
+        </div>
+
+        <div style={{ display: "flex", marginTop: 16 }}>
+          <span style={{ fontSize: 44, opacity: 0.9 }}>
+            Tap the link to answer.
+          </span>
         </div>
       </div>
     ),
